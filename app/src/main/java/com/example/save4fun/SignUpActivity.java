@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.save4fun.db.DBUsersHelper;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText editTextSignUpUsername, editTextSignUpPassword, editTextSignUpConfirmPassword;

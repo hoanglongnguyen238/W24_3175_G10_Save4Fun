@@ -1,4 +1,4 @@
-package com.example.save4fun;
+package com.example.save4fun.db;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;

@@ -5,12 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.save4fun.db.DBUsersHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // To remove DB
+        // To remove SharedPreferences
         // MainActivity.this.deleteDatabase(DBNAME);
         processCopyDB();
 
@@ -46,16 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         dbUsersHelper = new DBUsersHelper(MainActivity.this);
 
-        // To remove SharedPreferences
-        // SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, 0);
-        // preferences.edit().remove(HAS_LOGGED_IN).apply();
-
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_NAME, 0);
         boolean hasLoggedIn = sharedPreferences.getBoolean(HAS_LOGGED_IN, false);
 
         if(hasLoggedIn) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
+            finish();
         }
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {

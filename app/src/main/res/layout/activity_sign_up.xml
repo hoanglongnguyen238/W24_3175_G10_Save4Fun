@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/bg_login"
     android:padding="16dp"
     tools:context=".SignUpActivity">
 
@@ -23,14 +23,14 @@
         <ImageView
             android:layout_width="160dp"
             android:layout_height="130dp"
-            app:srcCompat="@drawable/logo1_main" />
+            app:srcCompat="@drawable/lg_main" />
 
         <EditText
             android:id="@+id/editTextSignUpUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@drawable/rounded_corner"
+            android:background="@drawable/shape_rounded_corner"
             android:ems="10"
             android:hint="Username"
             android:inputType="text"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_corner"
+            android:background="@drawable/shape_rounded_corner"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_corner"
+            android:background="@drawable/shape_rounded_corner"
             android:ems="10"
             android:hint="Confirm Password"
             android:inputType="textPassword"
@@ -119,7 +119,7 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/google_icon" />
+                android:src="@drawable/ic_google" />
         </LinearLayout>
 
     </LinearLayout>
