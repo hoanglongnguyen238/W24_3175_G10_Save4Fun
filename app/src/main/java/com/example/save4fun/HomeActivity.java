@@ -144,7 +144,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 currentFragment = PROFILE_FRAGMENT;
             }
         } else if (id == R.id.navLogout) {
-            // To remove SharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFERENCES_NAME, 0);
             sharedPreferences.edit().remove(MainActivity.HAS_LOGGED_IN).apply();
 
