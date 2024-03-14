@@ -10,13 +10,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.save4fun.fragment.AboutFragment;
 import com.example.save4fun.fragment.FavouriteFragment;
 import com.example.save4fun.fragment.HomeFragment;
 import com.example.save4fun.fragment.ListFragment;
@@ -30,12 +33,14 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
     BottomNavigationView bottomNavigation;
     Toolbar toolbar;
     FloatingActionButton fabHome;
 
     private static final int HOME_FRAGMENT = 0;
     private static final int PROFILE_FRAGMENT = 1;
+    private static final int NO_FRAGMENT = -1;
     private int currentFragment = HOME_FRAGMENT;
 
     @Override
@@ -54,17 +59,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
-
-        if (savedInstanceState == null) {
-            replaceFragment(new HomeFragment());
-            navigationView.setCheckedItem(R.id.navHome);
-        }
 
         // Handling bottom navigation
         bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.setBackground(null);
+        deselectBottomNavigation();
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -72,15 +73,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 int id = item.getItemId();
                 if (id == R.id.navList) {
                     replaceFragment(new ListFragment());
-                    return true;
                 } else if (id == R.id.navProduct) {
                     replaceFragment(new ProductFragment());
-                    return true;
                 } else if (id == R.id.navFavourite) {
                     replaceFragment(new FavouriteFragment());
-                    return true;
+                } else if (id == R.id.navAbout) {
+                    replaceFragment(new AboutFragment());
+                } else {
+                    return false;
                 }
-                return false;
+
+                deselectNavigationDrawer();
+                currentFragment = NO_FRAGMENT;
+
+                setColorFabHome(false);
+                return true;
             }
         });
 
@@ -90,6 +97,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 replaceFragment(new HomeFragment());
+
+                navigationView.setCheckedItem(R.id.navHome);
+                currentFragment = HOME_FRAGMENT;
+
+                deselectBottomNavigation();
+                setColorFabHome(true);
             }
         });
 
@@ -106,16 +119,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
+        if (savedInstanceState == null) {
+            replaceFragment(new HomeFragment());
+            navigationView.setCheckedItem(R.id.navHome);
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        boolean isHome = false;
         if (id == R.id.navHome) {
             if (currentFragment != HOME_FRAGMENT) {
                 replaceFragment(new HomeFragment());
                 currentFragment = HOME_FRAGMENT;
             }
+            isHome = true;
         } else if (id == R.id.navProfile) {
             if (currentFragment != PROFILE_FRAGMENT) {
                 replaceFragment(new ProfileFragment());
@@ -128,6 +148,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         item.setChecked(true);
         drawerLayout.closeDrawer(GravityCompat.START);
+        deselectBottomNavigation();
+        setColorFabHome(isHome);
         return true;
     }
 
@@ -135,5 +157,42 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void deselectBottomNavigation() {
+        bottomNavigation.getMenu().setGroupCheckable(0, true, false);
+        Menu menu = bottomNavigation.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            menuItem.setChecked(false);
+        }
+        bottomNavigation.getMenu().setGroupCheckable(0, true, true);
+    }
+
+    private void deselectNavigationDrawer() {
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem groupItem = menu.getItem(i);
+            SubMenu subMenu = groupItem.getSubMenu();
+            if (subMenu != null) {
+                // Iterate through each item in the group
+                int itemCount = subMenu.size();
+                for (int j = 0; j < itemCount; j++) {
+                    MenuItem item = subMenu.getItem(j);
+                    item.setChecked(false);
+                }
+            } else {
+                groupItem.setChecked(false);
+            }
+        }
+    }
+
+    private void setColorFabHome(boolean isSelected) {
+        Drawable drawable = fabHome.getDrawable();
+        if (isSelected) {
+            drawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+        } else {
+            drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        }
     }
 }

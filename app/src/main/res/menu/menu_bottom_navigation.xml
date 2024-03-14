@@ -11,7 +11,16 @@
         android:title="@string/nav_product" />
 
     <item
+        android:id="@+id/navBlank"
+        android:title="@string/nav_blank" />
+
+    <item
         android:id="@+id/navFavourite"
         android:icon="@drawable/ic_favorite"
         android:title="@string/nav_favourite" />
+
+    <item
+        android:id="@+id/navAbout"
+        android:icon="@drawable/ic_about"
+        android:title="@string/nav_about" />
 </menu>
