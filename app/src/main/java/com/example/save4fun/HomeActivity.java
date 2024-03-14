@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -143,6 +145,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         } else if (id == R.id.navLogout) {
             // To remove SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFERENCES_NAME, 0);
+            sharedPreferences.edit().remove(MainActivity.HAS_LOGGED_IN).apply();
+
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
 
         }
 
