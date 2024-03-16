@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.save4fun.db.DBUsersHelper;
+import com.example.save4fun.model.User;
+import com.example.save4fun.util.Constant;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,12 +22,11 @@ import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 100;
-    public static String PREFERENCES_NAME = "Save4Fun";
     public static String HAS_LOGGED_IN = "hasLoggedIn";
     EditText editTextMainUsername, editTextMainPassword;
     Button buttonLogin;
     String DB_PATH_SUFFIX = "/databases/";
-    String DBNAME = DBUsersHelper.DBNAME;
+    String DBNAME = Constant.DBNAME;
     TextView textViewGoToSignUp;
     DBUsersHelper dbUsersHelper;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbUsersHelper = new DBUsersHelper(MainActivity.this);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_NAME, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
         boolean hasLoggedIn = sharedPreferences.getBoolean(HAS_LOGGED_IN, false);
 
         if(hasLoggedIn) {
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = editTextMainUsername.getText().toString();
                 String password = editTextMainPassword.getText().toString();
+                User user = new User(username, password);
 
                 if (username.equals("") || password.equals("")) {
                     Toast.makeText(MainActivity.this, "Please enter all the fields", Toast.LENGTH_LONG).show();
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 if (res) {
                     Toast.makeText(MainActivity.this, "Signed in successfully", Toast.LENGTH_LONG).show();
 
-                    SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_NAME, 0);
+                    SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(HAS_LOGGED_IN, true);
                     editor.apply();

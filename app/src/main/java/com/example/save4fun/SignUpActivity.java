@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.save4fun.db.DBUsersHelper;
+import com.example.save4fun.model.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -46,7 +47,8 @@ public class SignUpActivity extends AppCompatActivity {
                     if (password.equals(confirmPassword)) {
                         boolean userExisted = dbUsersHelper.isUserExisted(username);
                         if (!userExisted) {
-                            boolean res = dbUsersHelper.insertUser(username, password);
+                            User user = new User(username, password);
+                            boolean res = dbUsersHelper.insertUser(user);
                             if (res) {
                                 Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

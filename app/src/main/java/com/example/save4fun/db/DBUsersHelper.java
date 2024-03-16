@@ -7,13 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBUsersHelper extends SQLiteOpenHelper {
+import com.example.save4fun.model.User;
+import com.example.save4fun.util.Constant;
 
-    public static final String DBNAME = "save4fun.db";
+public class DBUsersHelper extends SQLiteOpenHelper {
     public static final String USERS_TABLE = "users";
 
     public DBUsersHelper(Context context) {
-        super(context, DBNAME, null, 1);
+        super(context, Constant.DBNAME, null, 1);
     }
 
     @Override
@@ -26,11 +27,11 @@ public class DBUsersHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertUser(String username, String password) {
+    public boolean insertUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("password", password);
+        contentValues.put("username", user.getUsername());
+        contentValues.put("password", user.getPassword());
         long result = db.insert(USERS_TABLE, null, contentValues);
         return result != -1;
     }
@@ -46,6 +47,5 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         @SuppressLint("Recycle") Cursor cursor =
                 db.rawQuery("select * from users where username = ? and password = ?", new String[]{username, password});
         return cursor.getCount() > 0;
-
     }
 }

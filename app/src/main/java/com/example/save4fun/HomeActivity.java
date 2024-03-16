@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,7 @@ import com.example.save4fun.fragment.HomeFragment;
 import com.example.save4fun.fragment.ListFragment;
 import com.example.save4fun.fragment.ProductFragment;
 import com.example.save4fun.fragment.ProfileFragment;
+import com.example.save4fun.util.Constant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
@@ -100,7 +102,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 replaceFragment(new HomeFragment());
 
-                navigationView.setCheckedItem(R.id.navHome);
+                MenuItem menuItemHome = navigationView.getMenu().findItem(R.id.navHome);
+                menuItemHome.setChecked(true);
                 currentFragment = HOME_FRAGMENT;
 
                 deselectBottomNavigation();
@@ -144,13 +147,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 currentFragment = PROFILE_FRAGMENT;
             }
         } else if (id == R.id.navLogout) {
-            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFERENCES_NAME, 0);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
             sharedPreferences.edit().remove(MainActivity.HAS_LOGGED_IN).apply();
 
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-
         }
 
         item.setChecked(true);
@@ -197,9 +199,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void setColorFabHome(boolean isSelected) {
         Drawable drawable = fabHome.getDrawable();
         if (isSelected) {
-            drawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(ContextCompat.getColor(this, R.color.black), PorterDuff.Mode.SRC_ATOP);
         } else {
-            drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
         }
     }
 }
