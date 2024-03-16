@@ -22,10 +22,8 @@ import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 100;
-    public static String HAS_LOGGED_IN = "hasLoggedIn";
     EditText editTextMainUsername, editTextMainPassword;
     Button buttonLogin;
-    String DB_PATH_SUFFIX = "/databases/";
     String DBNAME = Constant.DBNAME;
     TextView textViewGoToSignUp;
     DBUsersHelper dbUsersHelper;
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // To remove SharedPreferences
+        // To remove db
         // MainActivity.this.deleteDatabase(DBNAME);
         processCopyDB();
 
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         dbUsersHelper = new DBUsersHelper(MainActivity.this);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
-        boolean hasLoggedIn = sharedPreferences.getBoolean(HAS_LOGGED_IN, false);
+        boolean hasLoggedIn = sharedPreferences.getBoolean(Constant.HAS_LOGGED_IN, false);
 
         if(hasLoggedIn) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
@@ -73,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
                     SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean(HAS_LOGGED_IN, true);
+                    editor.putBoolean(Constant.HAS_LOGGED_IN, true);
+                    editor.putString(Constant.USERNAME, username);
                     editor.apply();
 
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getDatabasePath() {
-        return getApplicationInfo().dataDir + DB_PATH_SUFFIX + DBNAME;
+        return getApplicationInfo().dataDir + Constant.DB_PATH_SUFFIX + DBNAME;
     }
 
     private void CopyDatabaseFromAsset() {
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             input = getAssets().open(DBNAME);
             String outFileName = getDatabasePath();
 
-            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+            File f = new File(getApplicationInfo().dataDir + Constant.DB_PATH_SUFFIX);
             if (!f.exists()) {
                 f.mkdir();
             }

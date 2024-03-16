@@ -48,4 +48,34 @@ public class DBUsersHelper extends SQLiteOpenHelper {
                 db.rawQuery("select * from users where username = ? and password = ?", new String[]{username, password});
         return cursor.getCount() > 0;
     }
+
+    public User getUserByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select * from users where username = ?", new String[]{username});
+        User user = new User();
+        if (cursor.moveToFirst()) {
+            user.setUsername(cursor.getString(0));
+            user.setFirstName(cursor.getString(2));
+            user.setLastName(cursor.getString(3));
+            user.setBirthday(cursor.getString(4));
+            user.setEmail(cursor.getString(5));
+            user.setPhone(cursor.getString(6));
+            return user;
+        }
+        return null;
+    }
+
+    public void updateUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("first_name", user.getFirstName());
+        values.put("last_name", user.getLastName());
+        values.put("birthday", user.getBirthday());
+        values.put("email", user.getEmail());
+        values.put("phone", user.getPhone());
+
+        db.update("users", values, "username=?", new String[]{String.valueOf(user.getUsername())});
+        db.close();
+    }
 }
