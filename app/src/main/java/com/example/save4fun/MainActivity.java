@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // To remove db
-        // MainActivity.this.deleteDatabase(DBNAME);
+        // clearDBAndSharedPreferences();
         processCopyDB();
 
         editTextMainUsername = findViewById(R.id.editTextMainUsername);
@@ -92,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void clearDBAndSharedPreferences() {
+        MainActivity.this.deleteDatabase(DBNAME);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
+        sharedPreferences.edit().remove(Constant.HAS_LOGGED_IN).apply();
+        sharedPreferences.edit().remove(Constant.USERNAME).apply();
+    }
+
     private void processCopyDB() {
         File dbFile = getDatabasePath(DBNAME);
         if (!dbFile.exists()) {
@@ -132,4 +140,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
     }
+
+
 }

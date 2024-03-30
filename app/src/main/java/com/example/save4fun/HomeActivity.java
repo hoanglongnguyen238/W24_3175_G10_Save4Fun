@@ -149,6 +149,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.navLogout) {
             SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
             sharedPreferences.edit().remove(Constant.HAS_LOGGED_IN).apply();
+            sharedPreferences.edit().remove(Constant.USERNAME).apply();
 
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(intent);

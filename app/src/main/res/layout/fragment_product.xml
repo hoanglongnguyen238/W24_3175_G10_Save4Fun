@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,7 +28,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp">
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -44,49 +45,47 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <EditText
-                    android:id="@+id/editTextText"
+                <android.widget.SearchView
+                    android:id="@+id/searchViewProductsByCategory"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="24dp"
-                    android:background="@drawable/bg_edit_text_home"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="Search products here ..."
+                    android:background="@drawable/bg_search_view"
+                    android:iconifiedByDefault="false"
                     android:inputType="text"
-                    android:padding="8dp"
-                    android:textColor="#9aa2aa"
-                    android:textSize="16sp" />
+                    android:queryHint="Search products here ..." />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Categories"
                 android:textColor="@color/black"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/linearLayoutProductCategories"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutVegetable"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -98,11 +97,11 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/img_vegetable"
-                        app:civ_border_color="@color/blue"
+                        app:civ_border_color="@color/black"
                         app:civ_border_width="2dp" />
 
                     <TextView
-                        android:id="@+id/textView41"
+                        android:id="@+id/textViewVegetable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -112,6 +111,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutMeat"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -123,11 +123,11 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/img_meat"
-                        app:civ_border_color="@color/blue"
+                        app:civ_border_color="@color/black"
                         app:civ_border_width="2dp" />
 
                     <TextView
-                        android:id="@+id/textView42"
+                        android:id="@+id/textViewMeat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -137,6 +137,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutSnack"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -148,11 +149,11 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/img_snack"
-                        app:civ_border_color="@color/blue"
+                        app:civ_border_color="@color/black"
                         app:civ_border_width="2dp" />
 
                     <TextView
-                        android:id="@+id/textView43"
+                        android:id="@+id/textViewSnack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -162,6 +163,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutBread"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -173,11 +175,11 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/img_bread"
-                        app:civ_border_color="@color/blue"
+                        app:civ_border_color="@color/black"
                         app:civ_border_width="2dp" />
 
                     <TextView
-                        android:id="@+id/textView44"
+                        android:id="@+id/textViewBread"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -187,22 +189,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutBeverage"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circleImageViewBevarage"
+                        android:id="@+id/circleImageViewBeverage"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/img_beverage"
-                        app:civ_border_color="@color/blue"
+                        app:civ_border_color="@color/black"
                         app:civ_border_width="2dp" />
 
                     <TextView
-                        android:id="@+id/textView45"
+                        android:id="@+id/textViewBeverage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -211,6 +214,32 @@
                         android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewProductByCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Products"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProductsByCategories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
         boolean hasLoggedIn = sharedPreferences.getBoolean(Constant.HAS_LOGGED_IN, false);
         String username = sharedPreferences.getString(Constant.USERNAME, "");
 
-        dbUsersHelper = new DBUsersHelper(getActivity());
+        dbUsersHelper = new DBUsersHelper(getContext());
 
         textViewUsername = view.findViewById(R.id.textViewUsername);
         textViewFirstNameContent = view.findViewById(R.id.textViewFirstNameContent);

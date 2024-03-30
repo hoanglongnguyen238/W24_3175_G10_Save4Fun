@@ -39,7 +39,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
     implementation("me.relex:circleindicator:2.1.6")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    implementation("com.ernestoyaquello.stepperform:vertical-stepper-form:2.7.0")
 }

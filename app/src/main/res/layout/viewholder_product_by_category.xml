@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewProduct"
         android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="8dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageViewFavourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="3dp"
@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProduct" />
 
     <TextView
         android:id="@+id/textViewProductName"
@@ -75,25 +75,25 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewProductName" />
 
     <ImageView
-        android:id="@+id/imageViewAddToList"
+        android:id="@+id/imageViewAddProductToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_list"
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewAddProductToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="Add to List"
         android:textColor="@color/black"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewAddToList"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewAddToList"
-        app:layout_constraintTop_toTopOf="@+id/imageViewAddToList" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAddProductToList"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewAddProductToList"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAddProductToList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

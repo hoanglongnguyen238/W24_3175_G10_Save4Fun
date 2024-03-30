@@ -19,12 +19,10 @@ public class DBUsersHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // db.execSQL("create table users(username text primary key, password text)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     public boolean insertUser(User user) {

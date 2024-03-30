@@ -3,6 +3,8 @@ package com.example.save4fun.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -11,7 +13,10 @@ import android.view.ViewGroup;
 
 import com.example.save4fun.R;
 import com.example.save4fun.adapter.BannerImageAdapter;
+import com.example.save4fun.adapter.PopularProductAdapter;
+import com.example.save4fun.db.DBProductsHelper;
 import com.example.save4fun.model.Banner;
+import com.example.save4fun.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,10 @@ public class HomeFragment extends Fragment {
     private BannerImageAdapter bannerImageAdapter;
 
     List<Banner> banners;
+    
+    List<Product> popularProducts;
+
+    DBProductsHelper dbProductsHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +51,22 @@ public class HomeFragment extends Fragment {
         circleIndicatorBanner.setViewPager(viewPagerBanner);
         bannerImageAdapter.registerDataSetObserver(circleIndicatorBanner.getDataSetObserver());
 
+        dbProductsHelper = new DBProductsHelper(getContext());
+        loadPopularProductFromDB();
+
+        PopularProductAdapter popularProductAdapter = new PopularProductAdapter(popularProducts);
+        
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+        RecyclerView recyclerViewPopularProduct = view.findViewById(R.id.recyclerViewPopularProduct);
+        recyclerViewPopularProduct.setAdapter(popularProductAdapter);
+        recyclerViewPopularProduct.setLayoutManager(gridLayoutManager);
+
         return view;
+    }
+
+    private void loadPopularProductFromDB() {
+        popularProducts = dbProductsHelper.getPopularProducts();
     }
 
     private void loadBanner() {
