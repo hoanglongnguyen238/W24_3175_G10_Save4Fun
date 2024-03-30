@@ -25,6 +25,8 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
 
     OnAddItemToListClickListener onAddItemToListClickListener;
 
+    OnAddOrRemoveFavouriteItemClickListener onAddOrRemoveFavouriteItemClickListener;
+
     public ProductByCategoryAdapter(List<Product> productsByCategory) {
         this.products = productsByCategory;
     }
@@ -55,6 +57,12 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
         byte[] decodedString = Base64.decode(products.get(position).getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProduct.setImageBitmap(decodedByte);
+
+        if(products.get(position).getIsFavourite()) {
+            holder.imageViewFavouriteIcon.setImageResource(R.drawable.ic_favorited);
+        } else {
+            holder.imageViewFavouriteIcon.setImageResource(R.drawable.ic_favorite);
+        }
     }
 
     @Override
@@ -71,7 +79,7 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
     public class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewProductName, textViewProductPrice, textViewAddProductToList;
-        ImageView imageViewFavourite, imageViewProduct, imageViewAddProductToList;
+        ImageView imageViewFavouriteIcon, imageViewProduct, imageViewAddProductToList;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,11 +87,14 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
             textViewProductName = itemView.findViewById(R.id.textViewProductName);
             textViewProductPrice = itemView.findViewById(R.id.textViewProductPrice);
 
-            imageViewFavourite = itemView.findViewById(R.id.imageViewFavourite);
-            imageViewFavourite.setOnClickListener(new View.OnClickListener() {
+            imageViewFavouriteIcon = itemView.findViewById(R.id.imageViewFavourite);
+            imageViewFavouriteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageViewFavourite.setImageResource(R.drawable.ic_favorited);
+                    if(onAddOrRemoveFavouriteItemClickListener != null) {
+                        onAddOrRemoveFavouriteItemClickListener.onAddOrRemoveFavouriteItemClick(getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
                 }
             });
 
@@ -121,5 +132,17 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
 
     public interface OnAddItemToListClickListener {
         void onAddItemToListClick(int position);
+    }
+
+    public OnAddOrRemoveFavouriteItemClickListener getOnAddOrRemoveFavouriteItemClickListener() {
+        return onAddOrRemoveFavouriteItemClickListener;
+    }
+
+    public void setOnAddOrRemoveFavouriteItemClickListener(OnAddOrRemoveFavouriteItemClickListener onAddOrRemoveFavouriteItemClickListener) {
+        this.onAddOrRemoveFavouriteItemClickListener = onAddOrRemoveFavouriteItemClickListener;
+    }
+
+    public interface OnAddOrRemoveFavouriteItemClickListener {
+        void onAddOrRemoveFavouriteItemClick(int position);
     }
 }

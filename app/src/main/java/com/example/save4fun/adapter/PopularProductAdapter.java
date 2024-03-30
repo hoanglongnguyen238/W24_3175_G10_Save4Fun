@@ -22,6 +22,7 @@ import java.util.List;
 public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAdapter.ProductViewHolder> {
 
     List<Product> products = new ArrayList<>();
+    PopularProductAdapter.OnAddOrRemoveFavouriteItemClickListener onAddOrRemoveFavouriteItemClickListener;
 
     public PopularProductAdapter(List<Product> products) {
         this.products = products;
@@ -39,12 +40,18 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         holder.textViewProductName.setText(products.get(position).getName());
 
-        DecimalFormat df = new DecimalFormat("$#.00");
+        DecimalFormat df = new DecimalFormat("$0.00");
         holder.textViewProductPrice.setText(df.format(products.get(position).getPrice()));
 
         byte[] decodedString = Base64.decode(products.get(position).getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProduct.setImageBitmap(decodedByte);
+
+        if(products.get(position).getIsFavourite()) {
+            holder.imageViewFavouriteIcon.setImageResource(R.drawable.ic_favorited);
+        } else {
+            holder.imageViewFavouriteIcon.setImageResource(R.drawable.ic_favorite);
+        }
     }
 
     @Override
@@ -52,25 +59,44 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
         return products.size();
     }
 
+    public void updateData(List<Product> newProducts) {
+        products.clear();
+        products.addAll(newProducts);
+        notifyDataSetChanged();
+    }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView textViewProductName, textViewProductPrice;
-        ImageView imageViewFavourite, imageViewProduct;
+        ImageView imageViewFavouriteIcon, imageViewProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewProductName = itemView.findViewById(R.id.textViewProductName);
             textViewProductPrice = itemView.findViewById(R.id.textViewProductPrice);
 
-            imageViewFavourite = itemView.findViewById(R.id.imageViewFavourite);
-            imageViewFavourite.setOnClickListener(new View.OnClickListener() {
+            imageViewFavouriteIcon = itemView.findViewById(R.id.imageViewFavourite);
+            imageViewFavouriteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageViewFavourite.setImageResource(R.drawable.ic_favorited);
+                    if(onAddOrRemoveFavouriteItemClickListener != null) {
+                        onAddOrRemoveFavouriteItemClickListener.onAddOrRemoveFavouriteItemClick(getAdapterPosition());
+                    }
                 }
             });
 
             imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
         }
+    }
+
+    public PopularProductAdapter.OnAddOrRemoveFavouriteItemClickListener getOnAddOrRemoveFavouriteItemClickListener() {
+        return onAddOrRemoveFavouriteItemClickListener;
+    }
+
+    public void setOnAddOrRemoveFavouriteItemClickListener(PopularProductAdapter.OnAddOrRemoveFavouriteItemClickListener onAddOrRemoveFavouriteItemClickListener) {
+        this.onAddOrRemoveFavouriteItemClickListener = onAddOrRemoveFavouriteItemClickListener;
+    }
+
+    public interface OnAddOrRemoveFavouriteItemClickListener {
+        void onAddOrRemoveFavouriteItemClick(int position);
     }
 }

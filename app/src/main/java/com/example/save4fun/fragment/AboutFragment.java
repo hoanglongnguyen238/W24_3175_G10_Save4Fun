@@ -26,10 +26,10 @@ public class AboutFragment extends Fragment {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<html><body><p align=\"justify\">");
-        sb.append("<strong>Save4Fun</strong> - A shopping mobile application to make shopping " +
+        sb.append("<strong>Save4Fun</strong> - A shopping application to make shopping " +
                 "experience easier and more convenient.");
         sb.append("<br><br>");
-        sb.append("With <strong>Save4Fun</strong>, we focus on keeping things organized and efficient. From making your own profiles to\n" +
+        sb.append("With <strong>Save4Fun</strong>, we focus on keeping things organized and efficient. From making your profiles to\n" +
                 "accessing your account info and making changes, our easy sign-in process ensures a smooth\n" +
                 "experience.");
         sb.append("<br><br>");

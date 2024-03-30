@@ -7,6 +7,7 @@ public class Product {
     private String category;
     private String image;
     private int quantity;
+    private boolean isFavourite;
 
     public Product() {
     }
@@ -75,5 +76,13 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean getIsFavourite() {
+        return isFavourite;
+    }
+
+    public void setIsFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 }

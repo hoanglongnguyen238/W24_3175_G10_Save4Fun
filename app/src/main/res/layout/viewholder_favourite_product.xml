@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageViewProduct"
+        android:id="@+id/imageViewFavouriteProduct"
         android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="8dp"
@@ -49,33 +49,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewProduct" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFavouriteProduct" />
 
     <TextView
-        android:id="@+id/textViewProductName"
+        android:id="@+id/textViewFavouriteProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Berry"
-        android:textSize="16sp"
         android:textColor="@color/blue"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <TextView
-        android:id="@+id/textViewProductPrice"
+        android:id="@+id/textViewFavouriteProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$100"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewProductName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProductName" />
+        app:layout_constraintStart_toStartOf="@+id/textViewFavouriteProductName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFavouriteProductName" />
 
     <ImageView
-        android:id="@+id/imageViewAddProductToList"
+        android:id="@+id/imageViewAddFavouriteProductToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -85,14 +85,14 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/textViewAddProductToList"
+        android:id="@+id/textViewAddFavouriteProductToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="Add to List"
         android:textColor="@color/black"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewAddProductToList"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewAddProductToList"
-        app:layout_constraintTop_toTopOf="@+id/imageViewAddProductToList" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAddFavouriteProductToList"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewAddFavouriteProductToList"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAddFavouriteProductToList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

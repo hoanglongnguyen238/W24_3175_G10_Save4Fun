@@ -95,7 +95,7 @@ public class ProductFragment extends Fragment {
         dbProductsHelper = new DBProductsHelper(getContext());
         dbListsHelper = new DBListsHelper(getContext());
 
-        productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY);
+        productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY, username);
         selectedCategory = R.id.linearLayoutVegetable;
         setSelectedTextViewCategory(textViewVegetable, circleImageViewVegetable, textViewCategories, circleImageViewCategories);
 
@@ -116,19 +116,19 @@ public class ProductFragment extends Fragment {
                     public void onClick(View view) {
                         // Handle click for the clicked child LinearLayout
                         if (view.getId() == R.id.linearLayoutVegetable) {
-                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY);
+                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY, username);
                             setSelectedTextViewCategory(textViewVegetable, circleImageViewVegetable, textViewCategories, circleImageViewCategories);
                         } else if (view.getId() == R.id.linearLayoutMeat) {
-                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.MEAT_CATEGORY);
+                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.MEAT_CATEGORY, username);
                             setSelectedTextViewCategory(textViewMeat, circleImageViewMeat, textViewCategories, circleImageViewCategories);
                         } else if (view.getId() == R.id.linearLayoutSnack) {
-                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.SNACK_CATEGORY);
+                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.SNACK_CATEGORY, username);
                             setSelectedTextViewCategory(textViewSnack, circleImageViewSnack, textViewCategories, circleImageViewCategories);
                         } else if (view.getId() == R.id.linearLayoutBread) {
-                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BREAD_CATEGORY);
+                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BREAD_CATEGORY, username);
                             setSelectedTextViewCategory(textViewBread, circleImageViewBread, textViewCategories, circleImageViewCategories);
                         } else if (view.getId() == R.id.linearLayoutBeverage) {
-                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BEVERAGE_CATEGORY);
+                            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BEVERAGE_CATEGORY, username);
                             setSelectedTextViewCategory(textViewBeverage, circleImageViewBeverage, textViewCategories, circleImageViewCategories);
                         }
                         selectedCategory = view.getId();
@@ -141,9 +141,22 @@ public class ProductFragment extends Fragment {
         productByCategoryAdapter.setOnAddItemToListClickListener(new ProductByCategoryAdapter.OnAddItemToListClickListener() {
             @Override
             public void onAddItemToListClick(int selectedProductPosition) {
-                Toast.makeText(getContext(), "Clicked to item at position " + selectedProductPosition, Toast.LENGTH_SHORT).show();
                 lists = dbListsHelper.getListByUsername(username);
                 showListDialog(selectedProductPosition);
+            }
+        });
+
+        productByCategoryAdapter.setOnAddOrRemoveFavouriteItemClickListener(new ProductByCategoryAdapter.OnAddOrRemoveFavouriteItemClickListener() {
+            @Override
+            public void onAddOrRemoveFavouriteItemClick(int position) {
+                if(productsByCategory.get(position).getIsFavourite()) {
+                    dbProductsHelper.addOrRemoveFavouriteProduct(username, productsByCategory.get(position).getId(), false);
+                } else {
+                    dbProductsHelper.addOrRemoveFavouriteProduct(username, productsByCategory.get(position).getId(), true);
+                }
+                String category = productsByCategory.get(position).getCategory();
+                productsByCategory = dbProductsHelper.getProductsByCategory(category, username);
+                productByCategoryAdapter.updateData(productsByCategory);
             }
         });
 
@@ -166,15 +179,15 @@ public class ProductFragment extends Fragment {
 
     private List<Product> filterListOfProducts(String text) {
         if (selectedCategory == R.id.linearLayoutVegetable) {
-            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY);
+            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.VEGETABLE_CATEGORY, username);
         } else if (selectedCategory == R.id.linearLayoutMeat) {
-            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.MEAT_CATEGORY);
+            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.MEAT_CATEGORY, username);
         } else if (selectedCategory == R.id.linearLayoutSnack) {
-            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.SNACK_CATEGORY);
+            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.SNACK_CATEGORY, username);
         } else if (selectedCategory == R.id.linearLayoutBread) {
-            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BREAD_CATEGORY);
+            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BREAD_CATEGORY, username);
         } else if (selectedCategory == R.id.linearLayoutBeverage) {
-            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BEVERAGE_CATEGORY);
+            productsByCategory = dbProductsHelper.getProductsByCategory(Constant.BEVERAGE_CATEGORY, username);
         }
         List<Product> filteredProducts = new ArrayList<>();
         for (Product product : productsByCategory) {
