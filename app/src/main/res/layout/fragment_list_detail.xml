@@ -41,7 +41,7 @@
                     android:background="@drawable/bg_search_view"
                     android:iconifiedByDefault="false"
                     android:inputType="text"
-                    android:queryHint="Search lists here ..." />
+                    android:queryHint="Search products here ..." />
             </LinearLayout>
 
             <TextView
