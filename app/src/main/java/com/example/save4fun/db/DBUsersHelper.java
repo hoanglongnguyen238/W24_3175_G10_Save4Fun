@@ -30,6 +30,9 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", user.getUsername());
         contentValues.put("password", user.getPassword());
+        if(user.getPassword() != null && user.getPassword().isEmpty()) {
+            contentValues.put("email", user.getEmail());
+        }
         long result = db.insert(USERS_TABLE, null, contentValues);
         return result != -1;
     }

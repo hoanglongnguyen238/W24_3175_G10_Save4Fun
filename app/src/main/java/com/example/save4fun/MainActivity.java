@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                 boolean userExisted = dbUsersHelper.isUserExisted(username);
                                 if (!userExisted) {
                                     User user = new User(username, "");
+                                    user.setEmail(email);
                                     boolean res = dbUsersHelper.insertUser(user);
                                     if (res) {
                                         userExisted = true;
