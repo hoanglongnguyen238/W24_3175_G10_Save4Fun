@@ -14,6 +14,7 @@
         android:src="@drawable/ic_account_circle" />
 
     <TextView
+        android:id="@+id/textViewNavigationHeaderUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -23,6 +24,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textViewNavigationHeaderEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="longnh238@gmail.com"
