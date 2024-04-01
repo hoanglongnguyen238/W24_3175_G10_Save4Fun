@@ -51,6 +51,7 @@ public class ListFragment extends Fragment {
         recyclerViewLists = view.findViewById(R.id.recyclerViewLists);
 
         searchViewList = view.findViewById(R.id.searchViewList);
+        searchViewList.clearFocus();
 
         dbListsHelper = new DBListsHelper(getContext());
 

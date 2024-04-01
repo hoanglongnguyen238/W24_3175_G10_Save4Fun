@@ -50,7 +50,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <android.widget.SearchView
-                    android:id="@+id/searchViewFavouriteProducts"
+                    android:id="@+id/searchViewFavouriteProduct"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="24dp"

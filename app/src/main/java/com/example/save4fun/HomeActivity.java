@@ -16,18 +16,22 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.save4fun.db.DBUsersHelper;
 import com.example.save4fun.fragment.AboutFragment;
 import com.example.save4fun.fragment.FavouriteFragment;
 import com.example.save4fun.fragment.HomeFragment;
 import com.example.save4fun.fragment.ListFragment;
 import com.example.save4fun.fragment.ProductFragment;
 import com.example.save4fun.fragment.ProfileFragment;
+import com.example.save4fun.model.User;
 import com.example.save4fun.util.Constant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    TextView textViewNavigationHeaderUsername, textViewNavigationHeaderEmail;
     BottomNavigationView bottomNavigation;
     Toolbar toolbar;
     FloatingActionButton fabHome;
@@ -46,6 +51,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final int PROFILE_FRAGMENT = 1;
     private static final int NO_FRAGMENT = -1;
     private int currentFragment = HOME_FRAGMENT;
+
+    private DBUsersHelper dbUsersHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        View headerView = navigationView.getHeaderView(0);
+        textViewNavigationHeaderUsername = headerView.findViewById(R.id.textViewNavigationHeaderUsername);
+        textViewNavigationHeaderEmail = headerView.findViewById(R.id.textViewNavigationHeaderEmail);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constant.PREFERENCES_NAME, 0);
+        boolean hasLoggedIn = sharedPreferences.getBoolean(Constant.HAS_LOGGED_IN, false);
+        String username = sharedPreferences.getString(Constant.USERNAME, "");
+
+        dbUsersHelper = new DBUsersHelper(HomeActivity.this);
+        if (hasLoggedIn && !username.isEmpty()) {
+            User user = dbUsersHelper.getUserByUsername(username);
+            if(user != null) {
+                String email = user.getEmail() != null ? user.getEmail() : "";
+
+                textViewNavigationHeaderUsername.setText(username);
+                textViewNavigationHeaderEmail.setText(email);
+            }
+        }
 
         // Handling bottom navigation
         bottomNavigation = findViewById(R.id.bottomNavigation);
