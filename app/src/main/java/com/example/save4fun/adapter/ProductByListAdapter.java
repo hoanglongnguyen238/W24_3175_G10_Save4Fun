@@ -23,6 +23,8 @@ public class ProductByListAdapter extends RecyclerView.Adapter<ProductByListAdap
 
     List<Product> products = new ArrayList<>();
 
+    OnDeleteItemClickListener onDeleteItemClickListener;
+
     public List<Product> getProducts() {
         return products;
     }
@@ -54,7 +56,7 @@ public class ProductByListAdapter extends RecyclerView.Adapter<ProductByListAdap
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProductByList.setImageBitmap(decodedByte);
 
-        holder.textViewProductByListQuantity.setText(String.valueOf(products.get(position).getQuantity()));
+        holder.textViewProductByListQuantity.setText("Quantity: " + String.valueOf(products.get(position).getQuantity()));
     }
 
     @Override
@@ -81,7 +83,26 @@ public class ProductByListAdapter extends RecyclerView.Adapter<ProductByListAdap
             textViewProductByListQuantity = itemView.findViewById(R.id.textViewProductByListQuantity);
 
             imageViewProductByList = itemView.findViewById(R.id.imageViewProductByList);
+
             imageViewDeleteProductByList = itemView.findViewById(R.id.imageViewDeleteProductByList);
+            imageViewDeleteProductByList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onDeleteItemClickListener.onDeleteItemClick(getAdapterPosition());
+                }
+            });
         }
+    }
+
+    public OnDeleteItemClickListener getOnDeleteItemClickListener() {
+        return onDeleteItemClickListener;
+    }
+
+    public void setOnDeleteItemClickListener(OnDeleteItemClickListener onDeleteItemClickListener) {
+        this.onDeleteItemClickListener = onDeleteItemClickListener;
+    }
+
+    public interface OnDeleteItemClickListener {
+        void onDeleteItemClick(int position);
     }
 }

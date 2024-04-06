@@ -49,6 +49,7 @@ public class ProductFragment extends Fragment {
 
     List<Product> productsByCategory;
     List<MyList> lists;
+
     TextView textViewVegetable, textViewMeat, textViewSnack, textViewBread, textViewBeverage;
     CircleImageView circleImageViewVegetable, circleImageViewMeat, circleImageViewSnack, circleImageViewBread, circleImageViewBeverage;
     List<TextView> textViewCategories;
@@ -57,12 +58,12 @@ public class ProductFragment extends Fragment {
     RecyclerView recyclerViewProductsByCategories;
     SearchView searchViewProduct;
     Button positiveButtonDialog;
+
     DBProductsHelper dbProductsHelper;
     DBListsHelper dbListsHelper;
+
     int selectedCategory = -1;
-
     String username = "";
-
     private int selectedListPositionInDialog = -1;
 
     @Override
@@ -142,14 +143,18 @@ public class ProductFragment extends Fragment {
             @Override
             public void onAddItemToListClick(int selectedProductPosition) {
                 lists = dbListsHelper.getListByUsername(username);
-                showListDialog(selectedProductPosition);
+                if (lists.isEmpty()) {
+                    Toast.makeText(getContext(), "Please create a list first before you can add a product to the list", Toast.LENGTH_SHORT).show();
+                } else {
+                    showListDialog(selectedProductPosition);
+                }
             }
         });
 
         productByCategoryAdapter.setOnAddOrRemoveFavouriteItemClickListener(new ProductByCategoryAdapter.OnAddOrRemoveFavouriteItemClickListener() {
             @Override
             public void onAddOrRemoveFavouriteItemClick(int position) {
-                if(productsByCategory.get(position).getIsFavourite()) {
+                if (productsByCategory.get(position).getIsFavourite()) {
                     dbProductsHelper.addOrRemoveFavouriteProduct(username, productsByCategory.get(position).getId(), false);
                 } else {
                     dbProductsHelper.addOrRemoveFavouriteProduct(username, productsByCategory.get(position).getId(), true);
@@ -348,7 +353,7 @@ public class ProductFragment extends Fragment {
 
     public void onAddButtonClick(int listId, int productId, int quantity) {
         boolean result = dbProductsHelper.addOrUpdateProductByList(listId, productId, quantity);
-        if(result) {
+        if (result) {
             Toast.makeText(getContext(), "Added item to list successfully", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Failed to add item to list", Toast.LENGTH_SHORT).show();

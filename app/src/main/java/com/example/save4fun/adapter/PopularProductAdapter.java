@@ -22,6 +22,9 @@ import java.util.List;
 public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAdapter.ProductViewHolder> {
 
     List<Product> products = new ArrayList<>();
+
+    OnAddItemToListClickListener onAddItemToListClickListener;
+
     PopularProductAdapter.OnAddOrRemoveFavouriteItemClickListener onAddOrRemoveFavouriteItemClickListener;
 
     public PopularProductAdapter(List<Product> products) {
@@ -66,8 +69,8 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewProductName, textViewProductPrice;
-        ImageView imageViewFavouriteIcon, imageViewProduct;
+        TextView textViewProductName, textViewProductPrice, textViewAddProductToList;
+        ImageView imageViewFavouriteIcon, imageViewProduct, imageViewAddProductToList;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,7 +88,39 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
             });
 
             imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
+
+            textViewAddProductToList = itemView.findViewById(R.id.textViewAddProductToList);
+            textViewAddProductToList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onAddItemToListClickListener != null) {
+                        onAddItemToListClickListener.onAddItemToListClick(getAdapterPosition());
+                    }
+                }
+            });
+
+            imageViewAddProductToList = itemView.findViewById(R.id.imageViewAddProductToList);
+            imageViewAddProductToList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onAddItemToListClickListener != null) {
+                        onAddItemToListClickListener.onAddItemToListClick(getAdapterPosition());
+                    }
+                }
+            });
         }
+    }
+
+    public OnAddItemToListClickListener getOnAddItemToListClickListener() {
+        return onAddItemToListClickListener;
+    }
+
+    public void setOnAddItemToListClickListener(OnAddItemToListClickListener onAddItemToListClickListener) {
+        this.onAddItemToListClickListener = onAddItemToListClickListener;
+    }
+
+    public interface OnAddItemToListClickListener {
+        void onAddItemToListClick(int position);
     }
 
     public PopularProductAdapter.OnAddOrRemoveFavouriteItemClickListener getOnAddOrRemoveFavouriteItemClickListener() {

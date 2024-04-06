@@ -23,6 +23,8 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
 
     List<Product> products = new ArrayList<>();
 
+    OnAddItemToListClickListener onAddItemToListClickListener;
+
     OnRemoveFavouriteItemClickListener onRemoveFavouriteItemClickListener;
 
     public FavouriteProductAdapter(List<Product> products) {
@@ -63,8 +65,8 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewFavouriteProductName, textViewFavouriteProductPrice;
-        ImageView imageViewFavouriteIcon, imageViewFavouriteProduct;
+        TextView textViewFavouriteProductName, textViewFavouriteProductPrice, textViewAddFavouriteProductToList;
+        ImageView imageViewFavouriteIcon, imageViewFavouriteProduct, imageViewAddFavouriteProductToList;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,7 +85,39 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
             });
 
             imageViewFavouriteProduct = itemView.findViewById(R.id.imageViewFavouriteProduct);
+
+            textViewAddFavouriteProductToList = itemView.findViewById(R.id.textViewAddFavouriteProductToList);
+            textViewAddFavouriteProductToList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onAddItemToListClickListener != null) {
+                        onAddItemToListClickListener.onAddItemToListClick(getAdapterPosition());
+                    }
+                }
+            });
+
+            imageViewAddFavouriteProductToList = itemView.findViewById(R.id.imageViewAddFavouriteProductToList);
+            imageViewAddFavouriteProductToList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onAddItemToListClickListener != null) {
+                        onAddItemToListClickListener.onAddItemToListClick(getAdapterPosition());
+                    }
+                }
+            });
         }
+    }
+
+    public OnAddItemToListClickListener getOnAddItemToListClickListener() {
+        return onAddItemToListClickListener;
+    }
+
+    public void setOnAddItemToListClickListener(OnAddItemToListClickListener onAddItemToListClickListener) {
+        this.onAddItemToListClickListener = onAddItemToListClickListener;
+    }
+
+    public interface OnAddItemToListClickListener {
+        void onAddItemToListClick(int position);
     }
 
     public OnRemoveFavouriteItemClickListener getOnRemoveFavouriteItemClickListener() {

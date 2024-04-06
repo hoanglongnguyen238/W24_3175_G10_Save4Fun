@@ -249,4 +249,9 @@ public class DBProductsHelper extends SQLiteOpenHelper {
             db.delete(FAVOURITE_TABLE, "username=? and product_id=?", new String[]{username, String.valueOf(productId)});
         }
     }
+
+    public void deleteProductInList(int listId, int productId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(LIST_PRODUCT_TABLE, "list_id=? and product_id=?", new String[]{String.valueOf(listId), String.valueOf(productId)});
+    }
 }

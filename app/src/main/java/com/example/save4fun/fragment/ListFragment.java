@@ -1,6 +1,8 @@
 package com.example.save4fun.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -86,9 +88,7 @@ public class ListFragment extends Fragment {
         listAdapter.setOnDeleteIconClickListener(new ListAdapter.OnDeleteIconClickListener() {
             @Override
             public void OnDeleteIconClick(int position) {
-                dbListsHelper.deleteListById(lists.get(position).getId());
-                lists = dbListsHelper.getListByUsername(username);
-                listAdapter.setLists(lists);
+                showDeleteConfirmationDialog(listAdapter, position);
             }
         });
 
@@ -135,6 +135,28 @@ public class ListFragment extends Fragment {
         }
 
         return view;
+    }
+
+    private void showDeleteConfirmationDialog(ListAdapter listAdapter, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Are you sure you want to delete?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbListsHelper.deleteListById(lists.get(position).getId());
+                        lists = dbListsHelper.getListByUsername(username);
+                        listAdapter.setLists(lists);
+                        listAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User cancelled the dialog, do nothing
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private List<MyList> filterListOfLists(String text) {
