@@ -1,5 +1,6 @@
 package com.example.save4fun.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,11 +8,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,8 @@ import com.example.save4fun.R;
 import com.example.save4fun.db.DBUsersHelper;
 import com.example.save4fun.model.User;
 import com.example.save4fun.util.Constant;
+
+import java.util.Calendar;
 
 public class ProfileFragment extends Fragment {
 
@@ -71,7 +76,38 @@ public class ProfileFragment extends Fragment {
 
         textViewFirstNameContent.addTextChangedListener(textWatcher);
         textViewLastNameContent.addTextChangedListener(textWatcher);
+
         textViewBirthdayContent.addTextChangedListener(textWatcher);
+        // textViewBirthdayContent.setInputType(InputType.TYPE_NULL);
+        textViewBirthdayContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+
+                int currentYear = calendar.get(Calendar.YEAR);
+                int currentMonth = calendar.get(Calendar.MONTH);
+                int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                if(!textViewBirthdayContent.getText().toString().isEmpty()) {
+                    String selectedTime[] = textViewBirthdayContent.getText().toString().split("/");
+                    currentYear = Integer.parseInt(selectedTime[2]);
+                    currentMonth = Integer.parseInt(selectedTime[1]) - 1;
+                    currentDay = Integer.parseInt(selectedTime[0]);
+                }
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                textViewBirthdayContent.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        },
+                        currentYear, currentMonth, currentDay);
+                datePickerDialog.show();
+            }
+        });
+
         textViewEmailContent.addTextChangedListener(textWatcher);
         textViewPhoneContent.addTextChangedListener(textWatcher);
 

@@ -159,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                 }
+                            } else {
+                                Toast.makeText(MainActivity.this, "Please sign in into a Google account first", Toast.LENGTH_SHORT).show();
                             }
                         } catch (ApiException e) {
                             e.printStackTrace();
@@ -182,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // No Google Accounts found. Just continue presenting the signed-out UI.
-                                Log.d(TAG, e.getLocalizedMessage());
+                                Toast.makeText(MainActivity.this, "No Google accounts found", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onFailure" + e.getLocalizedMessage());
                             }
                         });
             }
@@ -210,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         if (!dbFile.exists()) {
             try {
                 CopyDatabaseFromAsset();
-                Toast.makeText(this, "Successfully copied from assets folder", Toast.LENGTH_LONG).show();
+                // Toast.makeText(this, "Successfully copied from assets folder", Toast.LENGTH_LONG).show();
             } catch (Exception ex) {
                 Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
             }

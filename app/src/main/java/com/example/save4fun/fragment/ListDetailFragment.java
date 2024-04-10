@@ -116,6 +116,58 @@ public class ListDetailFragment extends Fragment {
             }
         });
 
+        displayPieChart();
+
+        return view;
+    }
+
+    private void showDeleteConfirmationDialog(ProductByListAdapter productByListAdapter, int productId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Are you sure you want to delete?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbProductsHelper.deleteProductInList(listId, productId);
+                        productsInList = dbProductsHelper.getProductsByListId(listId);
+                        productByListAdapter.updateData(productsInList);
+
+                        double total = calculateTotalPrice(productsInList);
+                        DecimalFormat df = new DecimalFormat("$0.00");
+                        textViewTotalPrice.setText(df.format(total));
+
+                        displayPieChart();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private double calculateTotalPrice(List<Product> products) {
+        double total = 0;
+        for (Product product : products) {
+            total += product.getPrice() * product.getQuantity();
+        }
+        return total;
+    }
+
+    private List<Product> filterListOfProductsInList(String text) {
+        productsInList = dbProductsHelper.getProductsByListId(listId);
+        List<Product> filteredProductsInList = new ArrayList<>();
+        for (Product productInList : productsInList) {
+            if (productInList.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredProductsInList.add(productInList);
+            }
+        }
+        productsInList = filteredProductsInList;
+        return filteredProductsInList;
+    }
+
+    private void displayPieChart() {
         // Build pie chart
         Map<String, List<Product>> productsInListMap = new LinkedHashMap<>();
         for (Product product : productsInList) {
@@ -176,51 +228,5 @@ public class ListDetailFragment extends Fragment {
 
         pieChartProductByCategories.animateY(1000);
         pieChartProductByCategories.invalidate();
-
-        return view;
-    }
-
-    private void showDeleteConfirmationDialog(ProductByListAdapter productByListAdapter, int productId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Are you sure you want to delete?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dbProductsHelper.deleteProductInList(listId, productId);
-                        productsInList = dbProductsHelper.getProductsByListId(listId);
-                        productByListAdapter.updateData(productsInList);
-
-                        double total = calculateTotalPrice(productsInList);
-                        DecimalFormat df = new DecimalFormat("$0.00");
-                        textViewTotalPrice.setText(df.format(total));
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private double calculateTotalPrice(List<Product> products) {
-        double total = 0;
-        for (Product product : products) {
-            total += product.getPrice() * product.getQuantity();
-        }
-        return total;
-    }
-
-    private List<Product> filterListOfProductsInList(String text) {
-        productsInList = dbProductsHelper.getProductsByListId(listId);
-        List<Product> filteredProductsInList = new ArrayList<>();
-        for (Product productInList : productsInList) {
-            if (productInList.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredProductsInList.add(productInList);
-            }
-        }
-        productsInList = filteredProductsInList;
-        return filteredProductsInList;
     }
 }

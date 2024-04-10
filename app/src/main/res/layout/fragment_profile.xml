@@ -91,11 +91,11 @@
                             android:id="@+id/textView4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/gray_dark"
                             android:gravity="center"
-                            android:text="Click on the field(s) to update your profile" />
+                            android:text="Click on the field(s) to update your profile"
+                            android:textColor="@color/gray_dark" />
 
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="16dp"
@@ -128,7 +128,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginHorizontal="10dp"
-                            android:background="@color/gray" />
+                            android:background="@color/gray" />-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -152,8 +152,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:text="Hoang Long"
                                 android:inputType="text"
+                                android:text="Hoang Long"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/gray_dark"
                                 android:textSize="16sp" />
@@ -189,8 +189,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:text="Nguyen"
                                 android:inputType="text"
+                                android:text="Nguyen"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/gray_dark"
                                 android:textSize="16sp" />
@@ -226,8 +226,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:text="01/01/1990"
+                                android:focusable="false"
                                 android:inputType="date"
+                                android:text="01/01/1990"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/gray_dark"
                                 android:textSize="16sp" />
@@ -263,8 +264,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:text="xyz@gmail.com"
                                 android:inputType="textEmailAddress"
+                                android:text="xyz@gmail.com"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/gray_dark"
                                 android:textSize="16sp" />
@@ -301,8 +302,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:text="(123) 456-7890"
                                 android:inputType="phone"
+                                android:text="(123) 456-7890"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/gray_dark"
                                 android:textSize="16sp" />
